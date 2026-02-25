@@ -56,34 +56,25 @@ default_map = {
 
 if selected == 'BMI':
     st.title('BMI Classification')
-    
-    # รับค่า Gender, Height, Weight ตามชุดข้อมูลรูปภาพ
-    person_gender = st.selectbox('Gender', list(gender_map.keys()))
-    height = st.text_input('Height (cm)')
-    weight = st.text_input('Weight (kg)')
-    
+    # 1. รับค่า Input (ตรวจสอบให้แน่ใจว่าย่อหน้าเท่ากัน)
+    gender = st.selectbox('Gender', options=[0, 1], help="0: Female, 1: Male")
+    height = st.number_input('Height (cm)', min_value=1.0, value=170.0)
+    weight = st.number_input('Weight (kg)', min_value=1.0, value=60.0)
     bmi_prediction = ''
-    
+    # 2. ส่วนของปุ่ม Predict (ต้องย่อหน้าให้ตรงกับตัวแปรด้านบน)
     if st.button('Predict'):
-        try:
-            # ดึงค่าไปทำนาย โดยเรียงตามคอลัมน์ Gender, Height, Weight
-            prediction = bmi_model.predict([
-                [
-                    gender_map[person_gender],
-                    float(height),
-                    float(weight)
-                ]
-            ])
-            
-            # แสดงผลลัพธ์ Index ที่โมเดลทำนายได้
-            bmi_prediction = f'Predicted BMI Index: {prediction[0]}'
-            
-        except ValueError:
-            st.error("Please enter valid numbers for Height and Weight.")
-            
-    if bmi_prediction != '':
-        st.success(bmi_prediction)
-
+        # ส่งค่าเข้าโมเดลตามลำดับในตาราง: Gender, Height, Weight
+        # ลบ gender_map และ person_gender ออก เพราะเราใช้ตัวแปร gender โดยตรง
+        prediction = bmi_model.predict([
+            [
+                gender, 
+                float(height), 
+                float(weight)
+            ]
+        ])
+        # 3. แสดงผลลัพธ์ตามค่า Index (0, 1, 2, 3, 4) จากตาราง
+        result_index = prediction[0]
+        st.success(f'ผลการทำนาย (Index): {result_index}')
 if(selected == 'Loan'):
     st.title('Loan Classification')
     
@@ -157,6 +148,7 @@ if(selected == 'Riding'):
           
 
     st.success(Riding_prediction)
+
 
 
 
