@@ -11,11 +11,11 @@ from streamlit_option_menu import option_menu
 
 riding_model = pickle.load(open("Riding_model.sav",'rb'))
 loan_model = pickle.load(open("loan_model.sav",'rb'))
-
+bmi_model = pickle.load(open("bmi_model.sav",'rb'))
 
 with st.sidebar:
     selected = option_menu(
-        'Classification',['Loan','Riding']
+        'Classification',['Loan','Riding','bmi']
         )
 
 gender_map = {
@@ -127,3 +127,4 @@ if(selected == 'Riding'):
           
 
     st.success(Riding_prediction)
+
