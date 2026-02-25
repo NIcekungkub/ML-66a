@@ -58,7 +58,7 @@ if selected == 'BMI':
     st.title('BMI Classification')
     
     # รับค่า Gender, Height, Weight ตามชุดข้อมูลรูปภาพ
-    person_gender = st.selectbox('Gender', ['Male', 'Female'])
+    person_gender = st.selectbox('Gender', list(gender_map.keys()))
     height = st.text_input('Height (cm)')
     weight = st.text_input('Weight (kg)')
     
@@ -83,7 +83,6 @@ if selected == 'BMI':
             
     if bmi_prediction != '':
         st.success(bmi_prediction)
-
 
 if(selected == 'Loan'):
     st.title('Loan Classification')
@@ -158,6 +157,7 @@ if(selected == 'Riding'):
           
 
     st.success(Riding_prediction)
+
 
 
 
